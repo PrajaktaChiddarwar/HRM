@@ -223,7 +223,7 @@ const Registration = () => {
           
           
 
-          <div className="mb-3 form-check">
+          <div className="mb-3 form-check ">
         <input
           type="checkbox"
           id="checkbox1"
@@ -232,12 +232,13 @@ const Registration = () => {
           onChange={handleCheckboxChange}
           onBlur={handleBlur}
         />
-        <label className="checkbox" htmlFor="checkbox1">
-         Send Me Test Account Setting
+        <label className="checkbox ml-2" htmlFor="checkbox1">
+           Send Me Test Account Setting
         </label>   
           </div>
-          <div className="mb-3 form-check">
-        <input
+          <div className="mb-3 form-check ">
+        <input 
+        
           type="checkbox"
           id="checkbox2"
           name="checkbox2"
@@ -245,11 +246,11 @@ const Registration = () => {
           onChange={handleCheckboxChange}
           onBlur={handleBlur}
         />
-        <label className="checkbox" htmlFor="checkbox2">
+        <label className="checkbox ml-3" htmlFor="checkbox2">
            Subscribe to Monthly Newsletter
         </label>
       </div>
-      <div className="mb-3 form-check">
+      <div className="mb-3 form-check ">
         <input
           type="checkbox"
           id="checkbox3"
@@ -258,11 +259,11 @@ const Registration = () => {
           onChange={handleCheckboxChange}
           onBlur={handleBlur}
         />
-        <label className="checkbox" htmlFor="checkbox3">
+        <label className="checkbox ml-3" htmlFor="checkbox3">
             Accept Terms of Services
         </label>
       </div>
-          <button type="submit" className="btn btn-primary button" >      Create Account</button>
+          <button type="submit" className="btn btn-primary button" >  Create Account</button>
         </form>
       </div>
       </>

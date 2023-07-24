@@ -128,8 +128,13 @@ justify-content: space-evenly;
   left:10rem;
   top: -1rem;
 
-  /* margin: auto; */
+
 }
+.checkbox
+{
+ margin-left: 1rem;
+}
+
 /* media query */
 
 
@@ -211,6 +216,10 @@ background-color: whitesmoke;
 .form-check
 {
 margin-left: -5rem;
+}
+.checkbox
+{
+ margin-left: 2px;
 }
 }
 
