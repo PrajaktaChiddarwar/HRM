@@ -1,11 +1,10 @@
 import '../css/Registration.css';
 import { BsPersonCircle, BsFillFileLock2Fill } from 'react-icons/bs';
 import { AiFillLock } from 'react-icons/ai'
-// import { Checkbox } from '@mui/material';
-// import { FormControlLabel } from '@mui/material';
 import { useFormik} from "formik";
 import { validate } from '../schemas/validate'
 import { useState } from 'react';
+// import { Button } from '@mui/material';
 const Registration = () => {
   const [checkboxes, setCheckboxes] = useState(
     {checkbox1: false,
@@ -13,7 +12,14 @@ const Registration = () => {
     checkbox3: false,
     }
   );
+  const [isChecked, setIsChecked] = useState(false);
+ 
 
+
+
+  const checkboxStyle={
+    color: isChecked ?'blue' : ""
+  }
   const initialValues =
   {
     username: "",
@@ -39,9 +45,10 @@ const Registration = () => {
       onSubmit: (values,  action) => {
         console.log("submitted", values);
         action.resetForm();
-        // resetForm();
+      
         console.log(values.checkbox);
-        // values.checkbox = false;
+ 
+        setIsChecked(!isChecked);
         setCheckboxes((prevCheckboxes) => ({
           ...prevCheckboxes,
           checkbox1: false,
@@ -63,6 +70,8 @@ const Registration = () => {
       [name]: checked,
     }));
   };
+
+ 
   return (
     <>
       <h1 className='text-center mt-2'>Create  Account</h1>
@@ -231,9 +240,10 @@ const Registration = () => {
           checked={checkboxes.checkbox1}
           onChange={handleCheckboxChange}
           onBlur={handleBlur}
+          onClick={checkboxStyle}
         />
         <label className="checkbox ml-2" htmlFor="checkbox1">
-           Send Me Test Account Setting
+           Send Me <span className='span'> Account Setting</span>Test
         </label>   
           </div>
           <div className="mb-3 form-check ">
@@ -245,9 +255,10 @@ const Registration = () => {
           checked={checkboxes.checkbox2}
           onChange={handleCheckboxChange}
           onBlur={handleBlur}
+          onClick={checkboxStyle}
         />
         <label className="checkbox ml-3" htmlFor="checkbox2">
-           Subscribe to Monthly Newsletter
+           Subscribe to <span className='span'>Monthly Newsletter</span>
         </label>
       </div>
       <div className="mb-3 form-check ">
@@ -258,12 +269,14 @@ const Registration = () => {
           checked={checkboxes.checkbox3}
           onChange={handleCheckboxChange}
           onBlur={handleBlur}
+          // onClick={checkboxStyle}
         />
         <label className="checkbox ml-3" htmlFor="checkbox3">
-            Accept Terms of Services
+            Accept <span className='span'> Terms of Services </span>
         </label>
       </div>
           <button type="submit" className="btn btn-primary button" >  Create Account</button>
+          {/* <Button variant="contained" className=' '>Contained</Button> */}
         </form>
       </div>
       </>
