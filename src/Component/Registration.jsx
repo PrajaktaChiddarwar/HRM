@@ -1,27 +1,29 @@
+// 
 import '../css/Registration.css';
 import { BsPersonCircle, BsFillFileLock2Fill } from 'react-icons/bs';
 import { AiFillLock } from 'react-icons/ai'
-import { useFormik} from "formik";
+import { useFormik } from "formik";
 import { validate } from '../schemas/validate'
 import { useState } from 'react';
-// import { Button } from '@mui/material';
+import { asyncThunkSignUp } from '../redux/createAsyncThunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 const Registration = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { SignUpData } = useSelector((store) => store.admin)
+
   const [checkboxes, setCheckboxes] = useState(
-    {checkbox1: false,
-    checkbox2: false,
-    checkbox3: false,
+    {
+      checkbox1: false,
+      checkbox2: false,
+      checkbox3: false,
     }
   );
-  const [isChecked, setIsChecked] = useState(false);
- 
 
-
-
-  const checkboxStyle={
-    color: isChecked ?'blue' : ""
-  }
-  const initialValues =
-  {
+  const initialValues = {
     username: "",
     fname: "",
     lname: "",
@@ -29,40 +31,33 @@ const Registration = () => {
     c_email: "",
     password: "",
     c_pass: "",
-    checkbox:false,
+    checkbox: false,
     checkbox1: false,
     checkbox2: false,
     checkbox3: false,
-  
-    
-
   }
+
   const { values, errors, touched, handleBlur, handleSubmit, handleChange } = useFormik(
     {
-
       initialValues: initialValues,
       validationSchema: validate,
-      onSubmit: (values,  action) => {
-        console.log("submitted", values);
-        action.resetForm();
-      
-        console.log(values.checkbox);
- 
-        setIsChecked(!isChecked);
-        setCheckboxes((prevCheckboxes) => ({
-          ...prevCheckboxes,
-          checkbox1: false,
-          checkbox2: false,
-          checkbox3: false,
-        }));
+      onSubmit: (values) => {
+        const payload = {
+          "first_name": values.fname,
+          "last_name": values.lname,
+          "email": values.email,
+          "repeat_email": values.c_email,
+          "password": values.password,
+          "repeat_password": values.c_pass
+        }
+        dispatch(asyncThunkSignUp(payload))
+        SignUpData?.isPageRedirect && navigate('/signin')
 
+        
       }
     }
   );
-  
- 
 
-  
   const handleCheckboxChange = (event) => {
     const { name, checked } = event.target;
     setCheckboxes((prevCheckboxes) => ({
@@ -71,7 +66,6 @@ const Registration = () => {
     }));
   };
 
- 
   return (
     <>
       <h1 className='text-center mt-2'>Create  Account</h1>
@@ -229,58 +223,54 @@ const Registration = () => {
                 : null}
             </div>
           </div>
-          
-          
+
+
 
           <div className="mb-3 form-check ">
-        <input
-          type="checkbox"
-          id="checkbox1"
-          name="checkbox1"
-          checked={checkboxes.checkbox1}
-          onChange={handleCheckboxChange}
-          onBlur={handleBlur}
-          onClick={checkboxStyle}
-        />
-        <label className="checkbox ml-2" htmlFor="checkbox1">
-           Send Me <span className='span'> Account Setting</span>Test
-        </label>   
+            <input
+              type="checkbox"
+              id="checkbox1"
+              name="checkbox1"
+              checked={checkboxes.checkbox1}
+              onChange={handleCheckboxChange}
+              onBlur={handleBlur}
+            />
+            <label className="checkbox ml-2" htmlFor="checkbox1">
+              Send Me Test Account Setting
+            </label>
           </div>
           <div className="mb-3 form-check ">
-        <input 
-        
-          type="checkbox"
-          id="checkbox2"
-          name="checkbox2"
-          checked={checkboxes.checkbox2}
-          onChange={handleCheckboxChange}
-          onBlur={handleBlur}
-          onClick={checkboxStyle}
-        />
-        <label className="checkbox ml-3" htmlFor="checkbox2">
-           Subscribe to <span className='span'>Monthly Newsletter</span>
-        </label>
-      </div>
-      <div className="mb-3 form-check ">
-        <input
-          type="checkbox"
-          id="checkbox3"
-          name="checkbox3"
-          checked={checkboxes.checkbox3}
-          onChange={handleCheckboxChange}
-          onBlur={handleBlur}
-          // onClick={checkboxStyle}
-        />
-        <label className="checkbox ml-3" htmlFor="checkbox3">
-            Accept <span className='span'> Terms of Services </span>
-        </label>
-      </div>
+            <input
+
+              type="checkbox"
+              id="checkbox2"
+              name="checkbox2"
+              checked={checkboxes.checkbox2}
+              onChange={handleCheckboxChange}
+              onBlur={handleBlur}
+            />
+            <label className="checkbox ml-3" htmlFor="checkbox2">
+              Subscribe to Monthly Newsletter
+            </label>
+          </div>
+          <div className="mb-3 form-check ">
+            <input
+              type="checkbox"
+              id="checkbox3"
+              name="checkbox3"
+              checked={checkboxes.checkbox3}
+              onChange={handleCheckboxChange}
+              onBlur={handleBlur}
+            />
+            <label className="checkbox ml-3" htmlFor="checkbox3">
+              Accept Terms of Services
+            </label>
+          </div>
           <button type="submit" className="btn btn-primary button" >  Create Account</button>
-          {/* <Button variant="contained" className=' '>Contained</Button> */}
         </form>
       </div>
-      </>
-      
+    </>
+
 
 
   )

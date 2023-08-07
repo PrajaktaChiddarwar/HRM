@@ -20,7 +20,6 @@ export const validate = Yup.object({
        'Password must contain at least 1 digit, 1 uppercase letter, and 1 special character'
      )
      .min(6, 'Password must be at least 6 characters long')
-     .required('Please Enter your Password').oneOf([Yup.ref('password'),null] ,
-    "paasword must match"),
-
+     .required('Please Enter your Password').oneOf([Yup.ref('password'),null] 
+   ,'Passwords Do Not Match!')
 })
